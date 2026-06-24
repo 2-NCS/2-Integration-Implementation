@@ -25,9 +25,13 @@ public class SecurityConfig {
     //  - 인증: httpBasic 사용
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        // 임시: 모두 허용 (TODO 에서 위 규칙으로 교체)
         http.csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/link/sync").hasRole("ADMIN")
+                .requestMatchers("/api/link/**").authenticated()
+                .anyRequest().permitAll()
+            )
+            .httpBasic(org.springframework.security.config.Customizer.withDefaults());
         return http.build();
     }
 
@@ -45,4 +49,5 @@ public class SecurityConfig {
                 .password(passwordEncoder().encode("1234")).roles("ADMIN").build();
         return new InMemoryUserDetailsManager(user, admin);
     }
+    
 }
