@@ -35,16 +35,36 @@ public class LinkServiceImpl implements LinkService {
     //  - 응답 PostDTO[] 를 돌며 createAt=now() 설정 후 postRepository.save(dto.toEntity())
     //  - 저장 건수(int) 반환
     @Override
+    @Transactional
     public int syncPosts() {
-        throw new UnsupportedOperationException("TODO: syncPosts 구현");
+        String url = UriComponentsBuilder.fromUriString(apiBase + "/posts")
+                .queryParam("_limit", 10)
+                .toUriString();
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<PostDTO[]> response = restTemplate.exchange(url, HttpMethod.GET, null, PostDTO[].class);
+
+        if (response.getStatusCode() != HttpStatus.OK || response.getBody() == null) {
+            throw new MyBizException("외부 API 연계 실패: " + url);
+        }
+
+        PostDTO[] posts = response.getBody();
+        for (PostDTO dto : posts) {
+            dto.setCreateAt(LocalDateTime.now());
+            postRepository.save(dto.toEntity());
+        }
+
+        return posts.length;
     }
 
     // TODO: DB 저장된 연계 데이터 목록 재제공
     //  - @Transactional(readOnly = true)
     //  - findAll() → PostDTO.from 으로 매핑하여 List 반환
     @Override
+    @Transactional(readOnly = true)
     public List<PostDTO> getPosts() {
-        throw new UnsupportedOperationException("TODO: getPosts 구현");
+
+
     }
 
     // TODO: 단건 재제공
