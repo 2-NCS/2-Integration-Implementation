@@ -19,6 +19,9 @@ class LinkServiceTest {
     //  - 이어서 linkService.getPosts() 가 비어있지 않은지 확인
     @Test
     void syncPosts_정상() {
-        fail("TODO: syncPosts 정상 동기화 테스트 구현");
+        int savedCount = linkService.syncPosts();
+        assertTrue(savedCount > 0);
+
+        assertFalse(linkService.getPosts().isEmpty());
     }
 }
