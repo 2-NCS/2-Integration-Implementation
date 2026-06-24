@@ -47,6 +47,7 @@ public class LinkController {
     //  - linkService.getPost(id) 결과를 200 반환
     @GetMapping(value = "/posts/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PostDTO> post(@PathVariable("id") Long id) {
-        throw new UnsupportedOperationException("TODO: post 구현");
+        PostDTO postDTO = linkService.getPost(id);
+        return ResponseEntity.status(HttpStatus.OK).body(postDTO);
     }
 }
