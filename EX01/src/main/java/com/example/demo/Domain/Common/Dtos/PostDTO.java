@@ -34,12 +34,12 @@ public class PostDTO {
     // TODO: Entity → DTO 변환(static). PostDTO.builder() 로 매핑하여 반환
     public static PostDTO from(Post p) {
 //        throw new UnsupportedOperationException("TODO: from 구현");
-//        return PostDTO.builder()
-//                .id(p.getId())
-//                .userId(p.getUserId())
-//                .title(p.getTitle())
-//                .body(p.getBody())
-//                .createAt(p.getCreateAt())
-//                .build();
+        return PostDTO.builder()
+                .id(p.getId())
+                .userId(p.getUserId())
+                .title(p.getTitle())
+                .body(p.getBody())
+                .createAt(p.getCreateAt())
+                .build();
     }
 }
