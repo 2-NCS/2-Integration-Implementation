@@ -16,6 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -63,8 +64,9 @@ public class LinkServiceImpl implements LinkService {
     @Override
     @Transactional(readOnly = true)
     public List<PostDTO> getPosts() {
-
-
+        return postRepository.findAll().stream()
+                .map(PostDTO::from)
+                .collect(Collectors.toList());
     }
 
     // TODO: 단건 재제공
