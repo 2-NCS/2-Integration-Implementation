@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -38,7 +39,8 @@ public class LinkController {
     //  - linkService.getPosts() 결과를 200 반환
     @GetMapping(value = "/posts", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> posts() {
-        throw new UnsupportedOperationException("TODO: posts 구현");
+        List<PostDTO> list = linkService.getPosts();
+        return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 
     // TODO: 단건 재제공 — GET /api/link/posts/{id}
