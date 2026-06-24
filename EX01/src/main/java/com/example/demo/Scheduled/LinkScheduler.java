@@ -24,7 +24,14 @@ public class LinkScheduler {
     //  1) 이 메서드 위에 @Scheduled(fixedDelayString = "${link.sync.delay:60000}") 를 붙인다.
     //  2) try { int n = linkService.syncPosts(); log.info("[Link] 배치 동기화 완료 - " + n + "건"); }
     //     catch (Exception e) { log.error("[Link] 배치 동기화 실패: " + e.getMessage()); }
+    @Scheduled(fixedDelayString = "${link.sync.delay:60000}")
     public void scheduledSync() {
-        // TODO: @Scheduled + syncPosts 호출 구현
+//        // TODO: @Scheduled + syncPosts 호출 구현
+//        try {
+//            int n = linkService.syncPosts();
+//            log.info("[Link] 배치 동기화 완료 - " + n + "건");
+//        } catch (Exception e) {
+//            log.error("[Link] 배치 동기화 실패: " + e.getMessage());
+//        }
     }
 }
