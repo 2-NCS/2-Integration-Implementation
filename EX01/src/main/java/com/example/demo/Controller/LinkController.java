@@ -4,10 +4,12 @@ import com.example.demo.Domain.Common.Dtos.PostDTO;
 import com.example.demo.Domain.Common.Service.LinkService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -25,7 +27,11 @@ public class LinkController {
     //  - (보안: SecurityConfig 에서 ADMIN 권한으로 보호)
     @PostMapping(value = "/sync", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> sync() {
-        throw new UnsupportedOperationException("TODO: sync 구현");
+        int count = linkService.syncPosts();
+        Map<String,Object> response = new HashMap<>();
+        response.put("message",count+"연계 동기화 성공!");
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     // TODO: 연계 데이터 목록 재제공 — GET /api/link/posts
